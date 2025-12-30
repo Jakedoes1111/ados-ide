@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+**/node_modules/
+yarn.lock
+package-lock.json
+
+# Build outputs
+**/dist/
+**/lib/
+**/src-gen/
+**/gen-webpack.config.js
+**/gen-webpack.node.config.js
+**/plugins/
+**/tsconfig.tsbuildinfo
+**/.browser_modules/
+
+# Node.js distributions (should be installed via package manager)
+node20/
+node-v*.zip
+node-v*.tar.gz
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+license-check-summary.txt*
+
+# Temporary files
+*.crdownload
+*.tmp
+*.temp
+GH Actions/
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Empty directories
+ados-extensions/
