@@ -14,6 +14,14 @@ package-lock.json
 **/tsconfig.tsbuildinfo
 **/.browser_modules/
 
+# Packaged applications (should be built, not committed)
+**/windows/win-unpacked/
+**/windows/*.exe
+**/windows/*.blockmap
+**/windows/*.yml
+**/mac/
+**/linux/
+
 # Node.js distributions (should be installed via package manager)
 node20/
 node-v*.zip
