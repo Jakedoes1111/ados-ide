@@ -36,16 +36,13 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies (no native scripts)
-        shell: bash
         run: |
           yarn --cwd theia-app install --ignore-scripts --frozen-lockfile || yarn --cwd theia-app install --ignore-scripts
 
       - name: Build all Theia extensions
-        shell: bash
         run: |
           yarn --cwd theia-app build:extensions
 
       - name: Verify direct JS extension builder entrypoint
-        shell: bash
         run: |
           node theia-app/scripts/build-extensions-direct.js

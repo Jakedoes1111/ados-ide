@@ -46,6 +46,11 @@ jobs:
         run: |
           yarn --cwd theia-app install --frozen-lockfile || yarn --cwd theia-app install
 
+      - name: Rebuild native electron modules once
+        shell: bash
+        run: |
+          yarn --cwd theia-app/applications/electron rebuild
+
       - name: Build without native rebuild step
         shell: bash
         run: |
