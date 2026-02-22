@@ -47,10 +47,11 @@ All of this runs **locally** on your machine—no cloud required, no telemetry, 
 
 ## Target Platform
 
-**v1 Focus**: Windows 11 on 8GB RAM laptops with integrated graphics
+**v1 Focus**: Linux, Windows, and macOS desktop environments
 
-- Performance optimized for resource-constrained devices
-- macOS and web builds planned for future releases
+- Performance optimized for mainstream developer laptops/desktops (integrated graphics, 8-16GB RAM)
+- Cross-platform parity is a release priority across Linux, Windows, and macOS
+- Web builds remain out of scope for v1
 - Electron-based desktop application
 
 ---
@@ -104,8 +105,8 @@ See [BUILD_PLAN.md](BUILD_PLAN.md) for detailed development roadmap and [BUILD_L
 
 - **Node.js**: >= 20
 - **Yarn**: >= 1.7.0 < 2
-- **Windows 11** (for v1)
-- **8GB+ RAM** recommended
+- **OS**: Linux, Windows, or macOS
+- **8GB+ RAM** recommended (16GB preferred for heavy flows/agents/browser usage)
 
 ### Building from Source
 
@@ -129,7 +130,8 @@ yarn electron start
 # Build production version
 yarn build
 
-# Package Windows installer
+# Package platform-native desktop artifacts
+# (run on the target OS for best compatibility/signing flow)
 yarn package:applications
 ```
 
@@ -143,10 +145,12 @@ The packaged application will be in `theia-app/applications/electron/dist/`.
 aDOs_IDE/
 ├── theia-app/              # Main Theia-based application
 │   ├── applications/       # Electron and browser apps
-│   ├── theia-extensions/   # Theia platform extensions
-│   └── ados-extensions/    # Custom aDOs extensions
-│       ├── command-palette/ # Command palette enhancements
-│       └── knowledge-layer/ # Knowledge management system
+│   └── theia-extensions/   # Product and custom aDOs extensions
+│       ├── product/        # Theia product shell integration
+│       ├── modal-layout/   # Modal layout extension
+│       ├── voice/          # Voice interaction extension
+│       ├── launcher/       # Launcher/system integration extension
+│       └── updater/        # Update flow plumbing (manual updates in v1)
 ├── docs/                   # Documentation
 │   ├── research/          # Research notes
 │   └── research-deep/     # Deep research documents
@@ -164,6 +168,7 @@ aDOs_IDE/
 - **[DECISIONS.md](DECISIONS.md)** - Architecture Decision Records (ADRs)
 - **[aDOs_v1_SYNTHESIS.md](aDOs_v1_SYNTHESIS.md)** - Complete architecture overview
 - **[BUILD_LOG.md](BUILD_LOG.md)** - Implementation progress and notes
+- **[docs/README.md](docs/README.md)** - Documentation authority order and status
 
 ---
 

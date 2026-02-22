@@ -38,8 +38,8 @@ aDOs v1 is:
 
 ### 2.2 Hardware & platform constraints
 
-- Target device: **8 GB RAM Windows 11 laptop with integrated GPU**.  
-- Platform: **Electron + Theia** desktop app, **Windows-first** in v1. macOS and web are future targets, not in scope for the first release.  
+- Target device: **mainstream Linux/Windows/macOS laptop or desktop with integrated GPU (8–16 GB RAM)**.
+- Platform: **Electron + Theia** desktop app with **Linux, Windows, and macOS** as v1 targets. Web is future-facing and not in scope for the first release.
 - Performance budgets (v1):  
   - Idle: ~250–300 MB, ~0–2 % CPU.  
   - Typical dev: 0.5–0.8 GB.  
@@ -60,7 +60,7 @@ aDOs v1 is:
 ### 3.1 Platform baseline
 
 - Base on **Theia Blueprint / Theia IDE** to reuse their Electron packaging, branding, installer and update scaffolding.  
-- Package via **electron-builder** (NSIS on Windows) with code-signed installers.  
+- Package via **electron-builder** with platform-native artifacts (Windows NSIS, macOS DMG/ZIP, Linux AppImage/deb/rpm as needed), signed/notarized per platform requirements.
 - Use Theia’s extension model for modular features: canvas, visual flows, browser, command palette, agents, knowledge layer are primarily Theia extensions + Electron main-process wiring.
 
 ### 3.2 Core subsystems
@@ -135,12 +135,12 @@ Key patterns:
 
 **Role**
 
-- Deliver aDOs as a **signed Electron desktop app** (Windows first), with a clean path to macOS and web later.  
+- Deliver aDOs as a **signed Electron desktop app** for Linux, Windows, and macOS, with a clean path to web later.
 
 **Locked decisions for v1**
 
 - Base on **Theia Blueprint / Theia IDE** fork, stripped of unnecessary extensions.  
-- Use **electron-builder** for Windows packaging (.exe via NSIS) with a CI pipeline that builds signed installers.  
+- Use **electron-builder** for cross-platform packaging with CI coverage for Linux, Windows, and macOS artifact generation and validation.
 - Ship **manual updates only** in v1 (no auto-update), even though Blueprint/electron-updater scaffolding is available. Security track overrides here.  
 - Maintain a **dependency + license BOM** to keep legal and supply-chain risks visible.  
 
@@ -365,13 +365,13 @@ At a high level, v1 should enable:
 - Ask an **agent** to do coding / research tasks with clear diffs and approvals.  
 - Capture knowledge as **Markdown notes**, searchable via full-text search and link graph, and re-used by agents.  
 - Use a **canvas** for diagrams and planning, with token-aware styling and export.  
-- Trust that the app is **locked-down** and behaves within resource budgets on an 8 GB laptop.  
+- Trust that the app is **locked-down** and behaves within resource budgets on mainstream Linux/Windows/macOS hardware.
 
 ### 6.2 v1: per-track commitments
 
 **Track 01 – Packaging**
 
-- Windows-only installer (signed) via electron-builder + Theia Blueprint fork.  
+- Cross-platform desktop artifacts via electron-builder + Theia Blueprint fork (Linux, Windows, macOS).
 - Manual update workflow documented (user downloads new installer).  
 
 **Track 02 – Canvas**

@@ -20,7 +20,7 @@ Each phase aims to be shippable on its own and composed of tasks that can be tac
   Implement visual flows and the minimal MCP tool set so flows and agents can operate on files, HTTP, browser, notes and canvas.
 
 - **Phase 4 – Agents, Security Hardening & Performance**  
-  Wire in the agent orchestrator, enforce the capability model end-to-end, and tune performance within the 8 GB laptop budget.
+  Wire in the agent orchestrator, enforce the capability model end-to-end, and tune performance against cross-platform baseline budgets.
 
 - **Phase 5 – Polish, Dogfooding & Alpha Release**  
   UX polish, guardrails, documentation, and internal use to validate the stack before any wider distribution.
@@ -33,14 +33,14 @@ Each phase aims to be shippable on its own and composed of tasks that can be tac
 
 - Have a forked and building desktop app based on Theia Blueprint.  
 - Establish hardened Electron config as a baseline.  
-- Set up a reproducible build/packaging pipeline for Windows installers.  
+- Set up a reproducible build/packaging pipeline for Linux, Windows, and macOS artifacts.
 - Introduce basic repo structure for extensions and config.
 
 ### Milestones
 
 - `M0.1` – Theia Blueprint fork builds and runs as a standalone app.  
 - `M0.2` – Electron main/renderer is configured with security best practices.  
-- `M0.3` – electron-builder pipeline produces a signed Windows installer.  
+- `M0.3` – electron-builder pipeline produces platform-native artifacts for Linux, Windows, and macOS (signing/notarization where required).
 - `M0.4` – Project structure ready for palette, flows, browser, agents, knowledge layer.
 
 ### Key Tasks (examples)
@@ -49,8 +49,8 @@ Each phase aims to be shippable on its own and composed of tasks that can be tac
 - Strip out clearly unneeded default extensions from the fork.  
 - Configure Electron `BrowserWindow` options: `contextIsolation`, `sandbox`, `nodeIntegration`, etc.  
 - Add a minimal preload/contextBridge which exposes only safe APIs initially.  
-- Add electron-builder config (appId, productName, NSIS config) and wire to CI (GitHub Actions or similar).  
-- Generate and configure signing certificates for Windows builds.  
+- Add electron-builder config (appId, productName, NSIS/DMG/ZIP targets) and wire to CI (GitHub Actions or similar).
+- Generate and configure signing/notarization credentials for Windows and macOS builds; define Linux artifact strategy (AppImage/deb/rpm as needed).
 - Introduce a `/extensions` folder layout for new custom Theia extensions (palette, browser, canvas, flows, agents, knowledge).  
 - Add initial `DECISIONS.md` and `aDOs_v1_SYNTHESIS.md` to the repo as top-level docs.
 
@@ -195,7 +195,7 @@ Each phase aims to be shippable on its own and composed of tasks that can be tac
 
 - Introduce an agent orchestrator that can use the MCP tool set safely.  
 - Enforce the capability model end-to-end (agents, flows, palette, tools).  
-- Ensure the whole app stays within performance budgets on an 8 GB laptop.
+- Ensure the whole app stays within performance budgets on mainstream Linux/Windows/macOS laptops.
 
 ### Milestones
 
@@ -253,7 +253,7 @@ Each phase aims to be shippable on its own and composed of tasks that can be tac
 
 - `M5.1` – Daily-driver stability across normal dev and research usage.  
 - `M5.2` – Onboarding flow and basic tutorials/checklist.  
-- `M5.3` – Signed Windows installer ready for external install.  
+- `M5.3` – Cross-platform install artifacts (Linux, Windows, macOS) ready for external install.
 - `M5.4` – Initial set of known issues and future roadmap documented.
 
 ### Key Tasks

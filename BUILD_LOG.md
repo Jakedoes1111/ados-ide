@@ -118,3 +118,36 @@ Continue backend development (knowledge layer, MCP services) without frontend, o
 - During implementation, no-rebuild host builds surfaced missing native binary artifacts (`drivelist`, `keytar`, `node-pty`) after a scripts-disabled install.
 - Container build path (`build-in-podman.sh`) completed successfully and restored a fully buildable workspace state.
 - The no-rebuild script now fails early with actionable remediation if this condition reappears.
+
+## 2026-02-22 – Runtime Optimization Profile (Fedora i7 + Iris Xe)
+
+### Status: Runtime tuning added
+
+- ✅ Added machine-aware Electron startup tuning in:
+  - `theia-app/applications/electron/scripts/theia-electron-main.js`
+- ✅ Added GPU profile modes via `ADOS_GPU_MODE`:
+  - `balanced` (default)
+  - `performance`
+  - `safe`
+  - `off`
+- ✅ Added CPU/RAM-aware process tuning:
+  - `UV_THREADPOOL_SIZE` auto-scaling (bounded)
+  - `renderer-process-limit` and `num-raster-threads` command-line tuning
+- ✅ Documented runtime profile controls in:
+  - `docs/build-environment.md`
+
+## 2026-02-22 – Documentation Baseline Refresh (Cross-Platform Priority)
+
+### Status: Documentation alignment complete
+
+- ✅ Updated decision baseline to prioritize Linux, Windows, and macOS for v1:
+  - `DECISIONS.md`
+- ✅ Updated roadmap/milestones to target cross-platform build outputs:
+  - `BUILD_PLAN.md`
+- ✅ Updated top-level project and build docs for cross-platform scope:
+  - `README.md`
+  - `docs/build-environment.md`
+- ✅ Corrected stale README structure references to current `theia-extensions/*` layout.
+
+Historical note:
+- Older log entries referencing Windows-only baselines or `ados-extensions/` reflect earlier planning snapshots and are superseded by the current decision baseline in `DECISIONS.md`.

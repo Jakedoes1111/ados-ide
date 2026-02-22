@@ -1,5 +1,16 @@
 # Build Environment Notes
 
+## Cross-Platform Build Baseline (v1)
+
+aDOs v1 prioritizes Linux, Windows, and macOS desktop usability. Build and packaging work should keep all three platforms first-class.
+
+General prerequisites across platforms:
+
+- Node.js 20.x
+- Yarn 1.x
+- Python 3 + native build toolchain for Node native modules
+- Platform-specific code-signing/notarization credentials for release artifacts
+
 ## Current Host Constraint
 
 On this Fedora host, full native dependency install for Electron builds is blocked without sudo access.
@@ -68,7 +79,7 @@ If those artifacts are missing, the script exits early with remediation guidance
 ## CI Profiles
 
 - `cross-platform-extension-smoke.yml`
-  - Runs on Linux + Windows
+  - Runs on Linux + Windows + macOS
   - Uses `yarn install --ignore-scripts`
   - Validates extension builds and cross-platform script entrypoint behavior
 - `linux-no-rebuild-gate.yml`
@@ -76,6 +87,32 @@ If those artifacts are missing, the script exits early with remediation guidance
   - Installs native build dependencies
   - Runs full `yarn build:no-rebuild:offline`
   - Verifies expected browser/electron build outputs
+
+## Runtime Tuning (Machine-Aware)
+
+Electron startup now applies a machine-aware runtime profile from
+`theia-app/applications/electron/scripts/theia-electron-main.js`.
+
+Default behavior:
+
+- `ADOS_GPU_MODE=balanced` (default if not set)
+- Enables conservative GPU acceleration switches (`gpu-rasterization`, `zero-copy`, native GPU buffers)
+- Sets renderer and raster thread limits based on CPU/RAM
+- Sets `UV_THREADPOOL_SIZE` automatically if not already configured
+
+Available GPU modes:
+
+- `ADOS_GPU_MODE=balanced` (recommended default)
+- `ADOS_GPU_MODE=performance` (more aggressive; includes `ignore-gpu-blocklist`)
+- `ADOS_GPU_MODE=safe` (no extra GPU acceleration switches)
+- `ADOS_GPU_MODE=off` (disables hardware acceleration)
+
+Example launch:
+
+```bash
+cd theia-app/applications/electron
+ADOS_GPU_MODE=performance yarn start
+```
 
 ## Nx/Lerna False-Failure Note
 

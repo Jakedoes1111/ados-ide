@@ -14,13 +14,13 @@ aDOs v1 is a local, AI-augmented IDE / mini-OS built as a desktop app (Electron 
 All core functionality (editing, search, canvas, flows, agents, browser automation) must work locally without requiring any cloud service. Network is optional, not required.
 
 **D-003 – Target user & device (v1)**  
-Primary target is a single user running Windows 11 on an 8 GB RAM laptop with integrated graphics. Performance budgets and UX are tuned for this baseline.
+Primary target is a single local user on Linux, Windows, or macOS desktop/laptop hardware. Performance budgets and UX are tuned for mainstream developer machines (integrated graphics, typically 8–16 GB RAM), with Linux as the current dogfooding baseline.
 
 **D-004 – Thin v1 slice**  
 v1 ships a coherent but minimal slice: Theia-based IDE shell, command palette, knowledge layer, embedded browser, simple visual flows, basic canvas, a single agent orchestrator with a curated tool set, and a hardened security envelope.
 
 **D-005 – Future platforms**  
-macOS and web builds are explicitly out of scope for v1. Design should keep them possible but they are not blocking constraints now.
+Linux, Windows, and macOS desktop builds are in scope for v1. Web builds remain explicitly out of scope for v1; design should keep web possible without making it a blocking constraint now.
 
 ---
 
@@ -30,7 +30,7 @@ macOS and web builds are explicitly out of scope for v1. Design should keep them
 The desktop app is based on a fork of Theia Blueprint / Theia IDE, with unnecessary extensions removed, and custom extensions added for palette, flows, browser, canvas, agents and knowledge layer.
 
 **D-011 – Electron packaging stack**  
-Electron is used as the runtime shell. electron-builder (NSIS on Windows) is the primary packaging tool for producing signed installers.
+Electron is used as the runtime shell. electron-builder is the primary packaging tool for producing platform-native artifacts for Linux, Windows (NSIS), and macOS (DMG/ZIP), with signing/notarization configured per platform requirements.
 
 **D-012 – Manual updates only in v1**  
 Auto-update mechanisms (electron-updater, channels, staged rollouts) are available in the stack but disabled for v1. Updates are performed by downloading and installing new versions manually.
