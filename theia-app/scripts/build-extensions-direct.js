@@ -7,7 +7,7 @@ const { spawn } = require('child_process');
 
 const THEIA_APP_DIR = path.resolve(__dirname, '..');
 const EXTENSIONS_DIR = path.join(THEIA_APP_DIR, 'theia-extensions');
-const YARN = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
+const YARN = 'yarn';
 
 function run(command, args, options = {}) {
   return new Promise((resolve, reject) => {
@@ -60,4 +60,3 @@ main().catch(error => {
   console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);
 });
-
