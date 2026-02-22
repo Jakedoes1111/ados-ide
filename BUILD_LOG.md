@@ -80,3 +80,41 @@ Continue backend development (knowledge layer, MCP services) without frontend, o
 **Target outcome:** A running, hardened Theia-based Electron app ready for custom extensions.
 
 ---
+
+## 2026-02-22 – Phase 0 Build Pipeline Hardening (Cross-Platform)
+
+### Status: Milestone implementation in progress
+
+**Completed in this pass:**
+- ✅ Added cross-platform Node build entrypoints:
+  - `theia-app/scripts/build-extensions-direct.js`
+  - `theia-app/scripts/build-no-rebuild-offline.js`
+- ✅ Kept legacy shell script names as compatibility wrappers:
+  - `theia-app/scripts/build-extensions-direct.sh`
+  - `theia-app/scripts/build-no-rebuild-offline.sh`
+- ✅ Added containerized non-sudo host fallback:
+  - `theia-app/scripts/build-in-podman.sh`
+- ✅ Added and wired extension scaffolding:
+  - `theia-app/theia-extensions/modal-layout`
+  - `theia-app/theia-extensions/voice`
+- ✅ Registered custom extension references/dependencies in:
+  - `theia-app/tsconfig.json`
+  - `theia-app/applications/browser/package.json`
+  - `theia-app/applications/electron/package.json`
+- ✅ Added root CI workflows for project-level gating:
+  - `.github/workflows/cross-platform-extension-smoke.yml`
+  - `.github/workflows/linux-no-rebuild-gate.yml`
+- ✅ Added explicit preflight validation in `build-no-rebuild-offline.js` for:
+  - missing workspace extension links in `node_modules`
+  - missing native `.node` artifacts (`drivelist`, `keytar`, `node-pty`)
+
+**Validated:**
+- ✅ `yarn --cwd theia-app/theia-extensions/voice build`
+- ✅ `yarn --cwd theia-app build:extensions`
+- ✅ `yarn --cwd theia-app build:no-rebuild:offline`
+- ✅ `cd theia-app && ./scripts/build-in-podman.sh`
+
+**Resolution notes:**
+- During implementation, no-rebuild host builds surfaced missing native binary artifacts (`drivelist`, `keytar`, `node-pty`) after a scripts-disabled install.
+- Container build path (`build-in-podman.sh`) completed successfully and restored a fully buildable workspace state.
+- The no-rebuild script now fails early with actionable remediation if this condition reappears.

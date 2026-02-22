@@ -121,6 +121,8 @@
     "@theia/variable-resolver": "1.66.2",
     "@theia/workspace": "1.66.2",
     "fs-extra": "^9.0.1",
+    "theia-ide-modal-layout-ext": "1.66.200",
+    "theia-ide-voice-ext": "1.66.200",
     "theia-ide-launcher-ext": "1.66.200",
     "theia-ide-product-ext": "1.66.200",
     "theia-ide-updater-ext": "1.66.200"

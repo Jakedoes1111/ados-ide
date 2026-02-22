@@ -1,0 +1,53 @@
+name: Cross-Platform Extension Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "theia-app/**"
+      - ".github/workflows/cross-platform-extension-smoke.yml"
+  pull_request:
+    paths:
+      - "theia-app/**"
+      - ".github/workflows/cross-platform-extension-smoke.yml"
+
+jobs:
+  extension-smoke:
+    name: Extension smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: yarn
+          cache-dependency-path: theia-app/yarn.lock
+
+      - name: Install dependencies (no native scripts)
+        shell: bash
+        run: |
+          yarn --cwd theia-app install --ignore-scripts --frozen-lockfile || yarn --cwd theia-app install --ignore-scripts
+
+      - name: Build all Theia extensions
+        shell: bash
+        run: |
+          yarn --cwd theia-app build:extensions
+
+      - name: Verify direct JS extension builder entrypoint
+        shell: bash
+        run: |
+          node theia-app/scripts/build-extensions-direct.js

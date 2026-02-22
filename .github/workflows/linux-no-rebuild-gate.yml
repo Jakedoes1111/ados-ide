@@ -1,0 +1,62 @@
+name: Linux No-Rebuild Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "theia-app/**"
+      - ".github/workflows/linux-no-rebuild-gate.yml"
+  pull_request:
+    paths:
+      - "theia-app/**"
+      - ".github/workflows/linux-no-rebuild-gate.yml"
+
+jobs:
+  no-rebuild:
+    name: No-rebuild build (ubuntu)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: yarn
+          cache-dependency-path: theia-app/yarn.lock
+
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            python3 \
+            make \
+            g++ \
+            pkg-config \
+            libsecret-1-dev \
+            libx11-dev \
+            libxkbfile-dev
+
+      - name: Install workspace dependencies
+        shell: bash
+        run: |
+          yarn --cwd theia-app install --frozen-lockfile || yarn --cwd theia-app install
+
+      - name: Build without native rebuild step
+        shell: bash
+        run: |
+          NODE_HEAP_MB=8192 yarn --cwd theia-app build:no-rebuild:offline
+
+      - name: Verify expected build outputs
+        shell: bash
+        run: |
+          test -f theia-app/applications/browser/lib/frontend/bundle.js
+          test -f theia-app/applications/browser/lib/backend/main.js
+          test -f theia-app/applications/electron/lib/frontend/bundle.js
+          test -f theia-app/applications/electron/lib/backend/main.js
