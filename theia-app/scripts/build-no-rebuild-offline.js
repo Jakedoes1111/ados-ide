@@ -9,7 +9,7 @@ const ffmpeg = require('@theia/ffmpeg');
 
 const THEIA_APP_DIR = path.resolve(__dirname, '..');
 const WORKSPACE_EXTENSIONS_DIR = path.join(THEIA_APP_DIR, 'theia-extensions');
-const YARN = 'yarn';
+const YARN = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
 const APP_PACKAGE_PATHS = [
   path.join(THEIA_APP_DIR, 'applications', 'browser', 'package.json'),
   path.join(THEIA_APP_DIR, 'applications', 'electron', 'package.json'),

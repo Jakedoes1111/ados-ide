@@ -50,6 +50,7 @@ jobs:
         shell: bash
         run: |
           yarn --cwd theia-app/applications/electron rebuild
+          npm --prefix theia-app rebuild keytar node-pty drivelist --build-from-source
 
       - name: Build without native rebuild step
         shell: bash

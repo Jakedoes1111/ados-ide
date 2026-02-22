@@ -7,7 +7,7 @@ const { spawn } = require('child_process');
 
 const THEIA_APP_DIR = path.resolve(__dirname, '..');
 const EXTENSIONS_DIR = path.join(THEIA_APP_DIR, 'theia-extensions');
-const YARN = 'yarn';
+const YARN = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
 
 function run(command, args, options = {}) {
   return new Promise((resolve, reject) => {
